@@ -4,12 +4,11 @@ public class Gerente extends Funcionario {
     
     private String departamento;
 
-    // Construtor vazio
     public Gerente() {
-        super(); // Chama o construtor vazio da classe Funcionario
+        super(); 
     }
 
-    // Construtor com todos os dados
+
     public Gerente(int matricula, String nome, int idade, String departamento) {
         super(matricula, nome, idade); 
         this.departamento = departamento; 

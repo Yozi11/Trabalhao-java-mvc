@@ -2,8 +2,8 @@ package projeto.com.example.view;
 
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
-import projeto.com.example.controle.FuncionarioController; // Note que mudei para controle (seu pacote atual)
-import projeto.com.example.modelo.Funcionario;           // Note que mudei para modelo
+import projeto.com.example.controle.FuncionarioController; 
+import projeto.com.example.modelo.Funcionario;          
 import projeto.com.example.modelo.Gerente;
 import projeto.com.example.modelo.Operador;
 
@@ -48,7 +48,7 @@ public class FuncionarioView {
                     int idade = Integer.parseInt(JOptionPane.showInputDialog("Idade:"));
                     String especifico = JOptionPane.showInputDialog(tipo == 1 ? "Departamento:" : "Função:");
                     
-                    // Ajustado para receber o boolean e mostrar a mensagem correta
+                    
                     if (controller.cadastrar(tipo, matricula, nome, idade, especifico)) {
                         JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                     } else {
@@ -60,7 +60,7 @@ public class FuncionarioView {
                 break;
 
             case 2:
-                // Ajustado de listarTodos() para listar()
+                
                 ArrayList<Funcionario> lista = controller.listar();
                 if (lista.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Nenhum funcionário cadastrado.");
@@ -83,8 +83,8 @@ public class FuncionarioView {
                 try {
                     int matBusca = Integer.parseInt(JOptionPane.showInputDialog("Digite a Matrícula:"));
                     
-                    // O Controller buscar() já retorna um objeto Funcionario
-                    Funcionario f = controller.buscar(matBusca); // ajustado de pesquisarPorMatricula para buscar
+                    
+                    Funcionario f = controller.buscar(matBusca); 
                     
                     if (f != null) {
                         String info = "Nome: " + f.getNome() + "\nIdade: " + f.getIdade() + "\n";
@@ -102,7 +102,7 @@ public class FuncionarioView {
             case 4:
                 try {
                     int matAlt = Integer.parseInt(JOptionPane.showInputDialog("Matrícula para alterar:"));
-                    Funcionario fAtual = controller.buscar(matAlt); // ajustado para buscar()
+                    Funcionario fAtual = controller.buscar(matAlt); 
                     
                     if (fAtual == null) {
                         JOptionPane.showMessageDialog(null, "Matrícula não encontrada!");
@@ -141,7 +141,7 @@ public class FuncionarioView {
                             "Deseja realmente excluir " + fExc.getNome() + "?", "Aviso", JOptionPane.YES_NO_OPTION);
                             
                     if (resposta == JOptionPane.YES_OPTION) {
-                        // Ajustado de excluir() para remover() conforme seu Controller
+                        
                         if (controller.remover(matExc)) {
                             JOptionPane.showMessageDialog(null, "Funcionário removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                         } else {

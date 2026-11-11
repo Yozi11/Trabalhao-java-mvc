@@ -15,29 +15,30 @@ public class FuncionarioController {
         dao = new FuncionarioDAO();
     }
     
-    // Método com a assinatura no seu estilo, mas com as validações de regra de negócio
     public boolean cadastrar(int tipo, int matricula, String nome, int idade, String especifico) {
-        // Validações básicas (nome preenchido e idade válida)
+       
         if (nome == null || nome.trim().isEmpty() || idade <= 0) {
             return false;
         }
         
-        // Regra: Verifica se a matrícula já existe no banco antes de cadastrar
+        
         if (dao.buscar(matricula) != null) {
             return false; 
         }
 
         Funcionario funcionario = null;
         
-        // Lógica de herança baseada no tipo escolhido
-        if (tipo == 1) { // Gerente
-            if (especifico == null || especifico.trim().isEmpty()) return false;
+
+        if (tipo == 1) { 
+            if (especifico == null || especifico.trim().isEmpty()) 
+                return false;
             funcionario = new Gerente(matricula, nome, idade, especifico);
-        } else if (tipo == 2) { // Operador
-            if (especifico == null || especifico.trim().isEmpty()) return false;
+        } else if (tipo == 2) { 
+            if (especifico == null || especifico.trim().isEmpty()) 
+                return false;
             funcionario = new Operador(matricula, nome, idade, especifico);
         } else {
-            return false; // Tipo inválido
+            return false; 
         }
 
         return dao.cadastrar(funcionario);
@@ -52,12 +53,12 @@ public class FuncionarioController {
     }
     
     public boolean alterar(int matricula, String nome, int idade, String especifico) {
-        // Validações
+        
         if (nome == null || nome.trim().isEmpty() || idade <= 0) {
             return false;
         }
 
-        // Regra: Verifica se o funcionário existe antes de alterar
+     
         Funcionario fAtual = dao.buscar(matricula);
         if (fAtual == null) {
             return false; 
@@ -66,7 +67,6 @@ public class FuncionarioController {
         fAtual.setNome(nome);
         fAtual.setIdade(idade);
 
-        // Atualiza o atributo específico dependendo da classe (Herança)
         if (fAtual instanceof Gerente) {
             if (especifico == null || especifico.trim().isEmpty()) return false;
             ((Gerente) fAtual).setDepartamento(especifico);
@@ -79,7 +79,7 @@ public class FuncionarioController {
     }
     
     public boolean remover(int matricula) {
-        // Regra: Verifica se a matrícula existe antes de tentar excluir
+        
         if (dao.buscar(matricula) == null) {
             return false;
         }
