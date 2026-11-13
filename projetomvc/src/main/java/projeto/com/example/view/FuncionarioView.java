@@ -13,7 +13,7 @@ public class FuncionarioView {
 
     public void iniciarMenu() {
         while (true) {
-            String menu = "=== SISTEMA DE RH ===\n\n"
+            String menu = "=== SISTEMA DE CADASTRO FUNCIONARIOS ===\n\n"
                         + "1 - Cadastrar Funcionário\n"
                         + "2 - Listar Funcionários\n"
                         + "3 - Pesquisar Funcionário\n"
@@ -65,31 +65,31 @@ public class FuncionarioView {
                 if (lista.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Nenhum funcionário cadastrado.");
                 } else {
-                    StringBuilder sb = new StringBuilder("Funcionários:\n\n");
-                    for (Funcionario f : lista) {
-                        sb.append(f.getMatricula()).append(" - ").append(f.getNome())
-                          .append(" (").append(f.getIdade()).append(" anos)\n");
-                        if (f instanceof Gerente) {
-                            sb.append("   Cargo: Gerente | Depto: ").append(((Gerente) f).getDepartamento()).append("\n\n");
-                        } else if (f instanceof Operador) {
-                            sb.append("   Cargo: Operador | Função: ").append(((Operador) f).getFuncao()).append("\n\n");
+                    StringBuilder Stringbuilder = new StringBuilder("Funcionários:\n\n");
+                    for (Funcionario funcionario : lista) {
+                        Stringbuilder.append(funcionario.getMatricula()).append(" - ").append(funcionario.getNome())
+                          .append(" (").append(funcionario.getIdade()).append(" anos)\n");
+                        if (funcionario instanceof Gerente) {
+                            Stringbuilder.append("   Cargo: Gerente | Depto: ").append(((Gerente) funcionario).getDepartamento()).append("\n\n");
+                        } else if (funcionario instanceof Operador) {
+                            Stringbuilder.append("   Cargo: Operador | Função: ").append(((Operador) funcionario).getFuncao()).append("\n\n");
                         }
                     }
-                    JOptionPane.showMessageDialog(null, sb.toString());
+                    JOptionPane.showMessageDialog(null, Stringbuilder.toString());
                 }
                 break;
 
             case 3:
                 try {
-                    int matBusca = Integer.parseInt(JOptionPane.showInputDialog("Digite a Matrícula:"));
+                    int Buscarmatricula = Integer.parseInt(JOptionPane.showInputDialog("Digite a Matrícula:"));
                     
                     
-                    Funcionario f = controller.buscar(matBusca); 
+                    Funcionario funcionario = controller.buscar(Buscarmatricula); 
                     
-                    if (f != null) {
-                        String info = "Nome: " + f.getNome() + "\nIdade: " + f.getIdade() + "\n";
-                        if (f instanceof Gerente) info += "Cargo: Gerente\nDepto: " + ((Gerente)f).getDepartamento();
-                        if (f instanceof Operador) info += "Cargo: Operador\nFunção: " + ((Operador)f).getFuncao();
+                    if (funcionario != null) {
+                        String info = "Nome: " + funcionario.getNome() + "\nIdade: " + funcionario.getIdade() + "\n";
+                        if (funcionario instanceof Gerente) info += "Cargo: Gerente\nDepto: " + ((Gerente)funcionario).getDepartamento();
+                        if (funcionario instanceof Operador) info += "Cargo: Operador\nFunção: " + ((Operador)funcionario).getFuncao();
                         JOptionPane.showMessageDialog(null, info);
                     } else {
                         JOptionPane.showMessageDialog(null, "Matrícula não encontrada.");
@@ -101,23 +101,23 @@ public class FuncionarioView {
 
             case 4:
                 try {
-                    int matAlt = Integer.parseInt(JOptionPane.showInputDialog("Matrícula para alterar:"));
-                    Funcionario fAtual = controller.buscar(matAlt); 
+                    int Alterarmatricula = Integer.parseInt(JOptionPane.showInputDialog("Matrícula para alterar:"));
+                    Funcionario funcionarioAtual = controller.buscar(Alterarmatricula); 
                     
-                    if (fAtual == null) {
+                    if (funcionarioAtual == null) {
                         JOptionPane.showMessageDialog(null, "Matrícula não encontrada!");
                         return;
                     }
                     
-                    String novoNome = JOptionPane.showInputDialog("Novo nome (Atual: " + fAtual.getNome() + "):");
-                    int novaIdade = Integer.parseInt(JOptionPane.showInputDialog("Nova idade (Atual: " + fAtual.getIdade() + "):"));
+                    String novoNome = JOptionPane.showInputDialog("Novo nome (Atual: " + funcionarioAtual.getNome() + "):");
+                    int novaIdade = Integer.parseInt(JOptionPane.showInputDialog("Nova idade (Atual: " + funcionarioAtual.getIdade() + "):"));
                     String novoEspecifico = JOptionPane.showInputDialog(
-                        fAtual instanceof Gerente ? "Novo depto (Atual: " + ((Gerente)fAtual).getDepartamento() + "):" 
-                                                  : "Nova função (Atual: " + ((Operador)fAtual).getFuncao() + "):"
+                        funcionarioAtual instanceof Gerente ? "Novo depto (Atual: " + ((Gerente)funcionarioAtual).getDepartamento() + "):" 
+                                                  : "Nova função (Atual: " + ((Operador)funcionarioAtual).getFuncao() + "):"
                     );
                     
                     // Ajustado para o boolean
-                    if (controller.alterar(matAlt, novoNome, novaIdade, novoEspecifico)) {
+                    if (controller.alterar(Alterarmatricula, novoNome, novaIdade, novoEspecifico)) {
                         JOptionPane.showMessageDialog(null, "Funcionário alterado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Erro ao alterar o funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -129,8 +129,8 @@ public class FuncionarioView {
 
             case 5:
                 try {
-                    int matExc = Integer.parseInt(JOptionPane.showInputDialog("Matrícula para excluir:"));
-                    Funcionario fExc = controller.buscar(matExc); // ajustado para buscar()
+                    int ExcluirMatricula = Integer.parseInt(JOptionPane.showInputDialog("Matrícula para excluir:"));
+                    Funcionario fExc = controller.buscar(ExcluirMatricula); // ajustado para buscar()
                     
                     if (fExc == null) {
                         JOptionPane.showMessageDialog(null, "Matrícula não encontrada!");
@@ -142,7 +142,7 @@ public class FuncionarioView {
                             
                     if (resposta == JOptionPane.YES_OPTION) {
                         
-                        if (controller.remover(matExc)) {
+                        if (controller.remover(ExcluirMatricula)) {
                             JOptionPane.showMessageDialog(null, "Funcionário removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(null, "Erro ao remover o funcionário.", "Erro", JOptionPane.ERROR_MESSAGE);
